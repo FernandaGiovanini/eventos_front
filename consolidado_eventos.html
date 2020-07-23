@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="consolidado_eventos.css">
+        <script type="text/javascript" src="consolidado_eventos.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    </head>
+    <body onload="gerarRelatorio();">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            
+              <br>
+
+              <div class="row">
+                <div class="col-12">
+                    <button class="btn btn-primary float-right" onclick="logout();">Logout</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h3>Event DashBoard - Consolidado Eventos</h3>
+                </div>
+            </div>
+
+            <br>
+            <div class="row titulo">
+                <div class="col-6">Alarme</div>
+                <div class="col-6">Quantidade</div>
+            </div>    
+
+            <div id="relatorio">
+
+            </div>
+
+            <br>
+            
+            <div class="row">
+                <button class="btn btn-primary" onclick="gerarGrafico();">Gerar Gráfico</button>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div id="labelsGrafico"></div>
+                    <div id="numerosGrafico"></div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <script>
+
+            function gerarGrafico() {
+
+                var valores = document.getElementById("numerosGrafico").textContent;
+                var nomes = document.getElementById("labelsGrafico").textContent;
+
+                var dados = valores.split(",");
+                var titulos = nomes.split(",");
+
+                var novosDados = [];
+                var novosTitulos = [];
+
+                limite = 5
+
+                for(i = 0; i < limite; i++) {
+                    novosDados[i] = dados[i];
+                }
+
+                for(j = 0; j < limite; j++) {
+                    novosTitulos[j] = novosTitulos[j];
+                }
+
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var chart = new Chart(ctx, {
+                    // The type of chart we want to create
+                    type: 'bar',
+
+                    // The data for our dataset
+                    data: {
+                        //labels: ['UPLOAD_FAIL', 'EVENT UNKNOWN', 'ABRUPT_INTERRUPTION', 'FAIL_LINK', 'CONNECT_ERR', 'isidro'],
+                        labels  : titulos,
+                        datasets: [{
+                            label: 'Consolidado Eventos',
+                            backgroundColor: 'rgb(255, 99, 132)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            //data: [0, 10, 5, 2, 20, 30, 45]
+                            //data: [313, 308, 304, 302, 273]
+                            //data: [valor1, valor2, valor3, valor4, valor5]
+                            data : dados
+                        }]
+                    },
+
+                    // Configuration options go here
+                    options: {}
+                });
+            }
+
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    </body>
+</html>

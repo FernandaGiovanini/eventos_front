@@ -7,21 +7,30 @@ var templateLinha = `<div class="row **LINHA**">
             
 
 
-function gerarRelatorio(){
+function gerarRelatorio() {
     var txtInicio = document.getElementById("txtDataInicio").value;
     var txtFim    = document.getElementById("txtDataFim").value;
 
     if(txtInicio == "" || txtFim == "") {
-        alert("Por favor informar 'início' e 'fim'");
+        //alert("Por favor informar 'início' e 'fim'");
+        document.getElementById("erroPreenchimento").style.display = "block";
+        document.getElementById("erroPreenchimento").className = "alert alert-danger";
+        document.getElementById("erroPreenchimento").innerHTML = "Por favor informar <strong>início</strong> e <strong>fim</strong>";
         return false;
+    }else {
+        document.getElementById("erroPreenchimento").style.display = "none";
     }
     
     var data1 = new Date(txtInicio);
     var data2 = new Date(txtFim);
 
     if(data2 < data1) {
-        alert("Data 'fim' deve ser maior ou igual a data 'início'");
+        document.getElementById("erroPreenchimento").style.display = "block";
+        document.getElementById("erroPreenchimento").className = "alert alert-warning";
+        document.getElementById("erroPreenchimento").innerHTML = "Data <strong>fim</strong> deve ser <strong>maior ou igual</strong> a data <strong>início</strong>";
         return false;
+    }else {
+        document.getElementById("erroPreenchimento").style.display = "none";
     }
 
     //console.log("Inicio = "+txtInicio+" / Fim = "+txtFim);
@@ -67,4 +76,9 @@ function preencheTabela(res){
 
 
 
+}
+
+function logout(){
+    localStorage.removeItem("EvtUser");
+    window.location = "index.html";
 }

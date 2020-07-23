@@ -21,7 +21,8 @@ function clickBotaoEnviar(){
     // corpo da mensagem
     var msgBody = {   
         email : txtEmail,
-        senha : txtSenha
+        senha : txtSenha,
+        racf  : txtEmail
     }
 
     // agora preciso definir o cabecalho da requisicao
