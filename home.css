@@ -25,3 +25,9 @@ body{
     padding: 5px;
     border-radius: 5px
 }
+
+.linkjs {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}

@@ -1,11 +1,17 @@
+var templateFuncionarios = `<div class="row">
+                                 <div class="col-2">**FUNCIONARIO**</div>
+                                 <div class="col-4">**EMAILFUNCIONARIO**</div>
+                            </div>
+                            `;
 var templateFoto = `<img src="**FOTO**" width="100%">`;
 var templateInfo = `<strong>Nome:</strong> **NOME** <br>
                     <strong>RACF:</strong> **RACF** <br>
                     <strong>EMAIL:</strong> **EMAIL** <br>
-                    <strong>DEPARTAMENTO:</strong> <a href="departamento.html?id=**ID**">**DEPTO**</a> <br>
+                    <strong>DEPARTAMENTO:</strong> <span class="linkjs" onclick=preencheFuncionarios();>**DEPTO**</span> <br>
                     <strong>UNIDADE:</strong> **UNIDADE**
                    `;
 
+//<strong>DEPARTAMENTO:</strong> <a href="departamento.html?id=**ID**">**DEPTO**</a> <br></br>                   
 
 function preencheInfo(){
     // qual a lógica da página?
@@ -32,6 +38,8 @@ function preencheInfo(){
                                   .replace("**UNIDADE**", objUser.depto.unidade)
                                   .replace("**ID**",objUser.depto.id);
         document.getElementById("infoUser").innerHTML = strInfo;
+
+        mostraDepartamento(objUser.depto.id);
     }
 }
 

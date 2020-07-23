@@ -1,8 +1,6 @@
 var templateLinha = `<div class="row **LINHA**">
-                         <div class="col-2">**DATA**</div>
-                         <div class="col-4">**ALARME**</div>
-                         <div class="col-3">**HOST**</div>
-                         <div class="col-3">**IP**</div>
+                         <div class="col-6">**ALARME**</div>
+                         <div class="col-6">**QUANTIDADE**</div>
                      </div>
                     `;
 
@@ -26,7 +24,7 @@ function gerarRelatorio(){
         return false;
     }
 
-    console.log("Inicio = "+txtInicio+" / Fim = "+txtFim);
+    //console.log("Inicio = "+txtInicio+" / Fim = "+txtFim);
 
     var msgBody = {
         inicio : txtInicio,
@@ -40,7 +38,7 @@ function gerarRelatorio(){
         }
     };
 
-    fetch("http://localhost:8088/eventos/periodo",cabecalho)
+    fetch("http://localhost:8088/alarmes/periodo",cabecalho)
        .then(res => res.json())
        .then(res => preencheTabela(res));
 }
@@ -58,11 +56,11 @@ function preencheTabela(res){
             estiloLinha = "linhaImpar";
         }
 
-        var strLinha = templateLinha.replace("**DATA**",evento.data)
-                                    .replace("**ALARME**", evento.alarme.nome)
-                                    .replace("**HOST**", evento.equipamento.hostname)
-                                    .replace("**LINHA**", estiloLinha)
-                                    .replace("**IP**", evento.equipamento.endIp);
+        var strLinha = templateLinha.replace("**ALARME**", evento.nomeAlarme)//.alarme.nome)
+                                    .replace("**QUANTIDADE**",evento.qtde)
+                                    //.replace("**HOST**", evento.equipamento.hostname)
+                                    //.replace("**LINHA**", estiloLinha)
+                                    //.replace("**IP**", evento.equipamento.endIp);
         tabela = tabela + strLinha;
     }
     document.getElementById("relatorio").innerHTML = tabela;
