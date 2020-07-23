@@ -53,6 +53,7 @@ function gerarRelatorio() {
 
 function preencheTabela(res){
     var tabela = "";
+    var linhas = 0;
 
     for (i=0; i<res.length; i++){
         var evento = res[i];
@@ -70,8 +71,12 @@ function preencheTabela(res){
                                     .replace("**LINHA**", estiloLinha)
                                     .replace("**IP**", evento.equipamento.endIp);
         tabela = tabela + strLinha;
+
+        linhas = res.length;
     }
     document.getElementById("relatorio").innerHTML = tabela;
+    document.getElementById("numeroRegistros").className = "alert alert-success";
+    document.getElementById("numeroRegistros").innerHTML = linhas + " Evento(s)";
 
 
 
