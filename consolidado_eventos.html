@@ -48,7 +48,7 @@
             <br>
             
             <div class="row">
-                <button class="btn btn-primary" onclick="gerarGrafico();">Gerar Gráfico</button>
+                <button class="btn btn-primary" onclick="gerarGrafico();">Gerar Gráfico (5 maiores ofensores)</button>
             </div>
 
             <br>
@@ -92,7 +92,7 @@
                 }
 
                 for(j = 0; j < limite; j++) {
-                    novosTitulos[j] = novosTitulos[j];
+                    novosTitulos[j] = titulos[j];
                 }
 
                 var ctx = document.getElementById('myChart').getContext('2d');
@@ -103,7 +103,7 @@
                     // The data for our dataset
                     data: {
                         //labels: ['UPLOAD_FAIL', 'EVENT UNKNOWN', 'ABRUPT_INTERRUPTION', 'FAIL_LINK', 'CONNECT_ERR', 'isidro'],
-                        labels  : titulos,
+                        labels  : novosTitulos,
                         datasets: [{
                             label: 'Consolidado Eventos',
                             backgroundColor: 'rgb(255, 99, 132)',
@@ -111,7 +111,7 @@
                             //data: [0, 10, 5, 2, 20, 30, 45]
                             //data: [313, 308, 304, 302, 273]
                             //data: [valor1, valor2, valor3, valor4, valor5]
-                            data : dados
+                            data : novosDados
                         }]
                     },
 
