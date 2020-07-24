@@ -1,10 +1,12 @@
 body{
-    background-color: rgb(58, 58, 58);
+    /*background-color: rgb(58, 58, 58);*/
+    /*background-color: #bbb;*/
+    background-color: white;
 }
 
 .container{
     background-color: white;
-    height: 100%;
+
 }
 
 #tipoRel{

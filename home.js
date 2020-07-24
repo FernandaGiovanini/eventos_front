@@ -1,3 +1,5 @@
+var ligaDesliga = false;
+
 var templateFuncionarios = `<div class="row">
                                  <div class="col-2">**FUNCIONARIO**</div>
                                  <div class="col-4">**EMAILFUNCIONARIO**</div>
@@ -7,7 +9,7 @@ var templateFoto = `<img src="**FOTO**" width="100%">`;
 var templateInfo = `<strong>Nome:</strong> **NOME** <br>
                     <strong>RACF:</strong> **RACF** <br>
                     <strong>EMAIL:</strong> **EMAIL** <br>
-                    <strong>DEPARTAMENTO:</strong> <span class="linkjs" onclick=preencheFuncionarios();>**DEPTO**</span> <br>
+                    <strong>DEPARTAMENTO:</strong> <span id="idDoDepartamento" class="linkjs" onclick=listaFuncionariosDepartamento(this.value);>**DEPTO**</span> <br>
                     <strong>UNIDADE:</strong> **UNIDADE**
                    `;
 
@@ -38,12 +40,43 @@ function preencheInfo(){
                                   .replace("**UNIDADE**", objUser.depto.unidade)
                                   .replace("**ID**",objUser.depto.id);
         document.getElementById("infoUser").innerHTML = strInfo;
-
-        mostraDepartamento(objUser.depto.id);
+        document.getElementById("idDoDepartamento").value = objUser.depto.id;
     }
 }
 
 function logout(){
     localStorage.removeItem("EvtUser");
     window.location = "index.html";
+}
+
+function listaFuncionariosDepartamento(valor) {
+    
+    fetch("http://localhost:8088/departamentos/"+valor)
+        .then(res => res.json())
+        .then(res => analisaFuncionariosMesmoDepartamento(res));
+}
+
+function analisaFuncionariosMesmoDepartamento(obj) {
+
+    if(!ligaDesliga) {
+
+        var lista = ""
+
+        console.log("to na área");
+        for(a = 0; a < obj.listaUsuarios.length; a++) {
+            var evento = obj.listaUsuarios[a];
+
+            lista += evento.nome + "<br>";
+        }
+
+        document.getElementById("funcionariosMesmoDepartamento").style.display = "block";
+        document.getElementById("funcionariosMesmoDepartamento").className = "alert alert-success";
+        document.getElementById("funcionariosMesmoDepartamento").innerHTML = "Pessoas nesse departamento:" + "<br><br>";
+        document.getElementById("funcionariosMesmoDepartamento").innerHTML += lista;
+
+        ligaDesliga = true;
+    }else {
+        document.getElementById("funcionariosMesmoDepartamento").style.display = "none";
+        ligaDesliga = false;
+    }
 }
