@@ -11,13 +11,14 @@ var templateFoto = `<img src="**FOTO**" width="100%">`;
 var templateInfo = `<strong>Nome:</strong> **NOME** <br>
                     <strong>RACF:</strong> **RACF** <br>
                     <strong>EMAIL:</strong> **EMAIL** <br>
-                    <strong>DEPARTAMENTO:</strong> <a href="lista_funcionarios.html" target="_blank" id="idDoDepartamento" onclick="window.open(this.href, this.target, 'width=600,height=400', this.value); return false" class="linkjs">**DEPTO**</a> <br>
+                    <strong>DEPARTAMENTO:</strong> <a href="lista_funcionarios.html" target="_blank" id="idDoDepartamento" onclick="window.open(this.href, this.target, 'width=754,height=478'); return false" class="linkjs">**DEPTO**</a> <br>
                     <strong>UNIDADE:</strong> **UNIDADE**
                    `;
 
 //<strong>DEPARTAMENTO:</strong> <a href="departamento.html?id=**ID**">**DEPTO**</a> <br></br>                   
 
 function preencheInfo(){
+
     // qual a lógica da página?
     /* ao ser carregada, ela vai chamar esta função (a gente vê isso no evento onLoad)
        Uma vez carregada, eu vou verificar se o usuário está com informações armazenadas no 
@@ -33,7 +34,7 @@ function preencheInfo(){
     else{
         var objUser = JSON.parse(user);  // aqui vou converter a STRING armazenada para um objeto
         var strFoto = templateFoto.replace("**FOTO**", objUser.linkFoto);
-        document.getElementById("fotoUser").innerHTML = strFoto;
+        //document.getElementById("fotoUser").innerHTML = strFoto;
 
         var strInfo = templateInfo.replace("**NOME**", objUser.nome)
                                   .replace("**RACF**", objUser.racf)
@@ -43,10 +44,37 @@ function preencheInfo(){
                                   .replace("**ID**",objUser.depto.id);
         document.getElementById("infoUser").innerHTML = strInfo;
         document.getElementById("idDoDepartamento").value = objUser.depto.id;
+
+        listaFuncionariosDepartamento(objUser.depto.id);
     }
 }
 
-function logout(){
-    localStorage.removeItem("EvtUser");
-    window.location = "index.html";
+function listaFuncionariosDepartamento(valor) {
+    
+    fetch("http://localhost:8088/departamentos/"+valor)
+        .then(res => res.json())
+        .then(res => analisaFuncionariosMesmoDepartamento(res));
+}
+
+function analisaFuncionariosMesmoDepartamento(obj) {
+
+    lista = [];
+
+    document.getElementById("tituloDepartamento").innerHTML = "<h3>Pessoas do departamento " + obj.nome + "</h3>";
+
+    for(a = 0; a < obj.listaUsuarios.length; a++) {
+    var evento = obj.listaUsuarios[a];
+    //alert(evento.nome);
+    //lista += evento.nome + "<br>";
+        document.getElementById("espaco").innerHTML += "<strong>Nome:</strong> " + evento.nome + "<br>";
+        document.getElementById("espaco").innerHTML += "<strong>Email:</strong> " + "<a href='mailto:" +evento.email +"'>"+evento.email+"<br>";
+        document.getElementById("espaco").innerHTML += "<strong>Racf:</strong> " + evento.racf + "<br>";
+        document.getElementById("espaco").innerHTML += "<hr>";
+    }
+
+    
+        /*document.getElementById("velho").style.display = "block";
+        document.getElementById("velho").className = "alert alert-success";
+        document.getElementById("velho").innerHTML = "Pessoas nesse departamento:" + "<br><br>";
+        document.getElementById("velho").innerHTML += lista;*/
 }
